@@ -1,15 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
-<script>
-    document.cookie = "admin=admin1";
-</script>
-<body>
-    ss
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <pre class=" language-js"><code class="prism  language-js">app<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">var</span> query <span class="token operator">=</span> <span class="token function">encodeURI</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>send<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token string">"https://www.op.gg/summoner/userName="</span>
+
+    <span class="token function">request</span><span class="token punctuation">(</span>url <span class="token operator">+</span> query<span class="token punctuation">,</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> response<span class="token punctuation">,</span> html<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>error <span class="token operator">&amp;&amp;</span> response<span class="token punctuation">.</span>statusCode <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            <span class="token keyword">var</span> $ <span class="token operator">=</span> cheerio<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+
+                <span class="token keyword">var</span> ranktype <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".RankType"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>children<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+                res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`검색 결과 없음!`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> tierrank <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".TierRank"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>children<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+
+            <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> win <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".win"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>children<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>data<span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+
+            <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token keyword">var</span> lose <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".lose"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>children<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>data<span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>ranktype <span class="token operator">!==</span> undefined<span class="token punctuation">)</span>
+
+                res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`&lt;script&gt;alert(\`랭크 타입: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>ranktype<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\n랭크: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>tierrank<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\n최근 20경기: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>win<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">승 </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>lose<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">패\`);window.location.href="/";&lt;/script&gt;`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>statusCode <span class="token operator">==</span> <span class="token number">400</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>query<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> query<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+                res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`&lt;h1&gt;flag 2: LFI_vu1n3r4bili7y!!&lt;/h1&gt;`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">else</span>
+
+                res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`&lt;h1&gt;flag 1: to0_long_qu3ry&lt;/h1&gt;`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+
+    </div>
+  </div>
 </body>
+
 </html>
